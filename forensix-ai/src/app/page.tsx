@@ -59,7 +59,7 @@ export default function LandingPage() {
       <nav className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/[0.06] bg-[#080e1a]/80 backdrop-blur sticky top-0">
         <div className="flex items-center gap-3">
           <div className="relative flex items-center justify-center w-8 h-8 rounded-lg overflow-hidden bg-black">
-            <img src="/logo.png" alt="Logo" className="w-8 h-8 object-cover object-top scale-110" />
+            <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
           </div>
           <span className="text-white font-bold text-xl">ForensiX<span className="text-cyan-400"> AI</span></span>
         </div>
