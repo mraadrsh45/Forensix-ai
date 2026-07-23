@@ -65,10 +65,8 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
         {/* Logo */}
         <div className="flex items-center justify-between px-5 py-5 border-b border-white/[0.06]">
           <Link href="/dashboard" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                <Shield className="w-4 h-4 text-white" />
-              </div>
+            <div className="relative flex items-center justify-center w-8 h-8 rounded-lg overflow-hidden bg-black">
+              <img src="/logo.png" alt="Logo" className="w-8 h-8 object-cover object-top scale-110" />
               <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full border border-[#080e1a] animate-pulse" />
             </div>
             <div>
