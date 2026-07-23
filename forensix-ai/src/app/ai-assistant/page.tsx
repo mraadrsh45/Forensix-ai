@@ -105,20 +105,40 @@ export default function AIAssistant() {
     };
 
     try {
-      const res = await apiPost<InvestigationResult>("/ai-investigation/execute", {
+      const rawRes = await apiPost<any>("/ai-investigation/execute", {
         case_name: "CASE-2025-INCIDENT-ALPHA",
         target_subject: "Phishing & Ransomware Outbreak"
       }, fallback);
+
+      // Normalize backend payload to frontend format
+      const res: InvestigationResult = {
+        analysis_id: rawRes.analysis_id || `INV-CASE-${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
+        case_name: rawRes.case_name || "CASE-2025-INCIDENT-ALPHA",
+        target_subject: rawRes.target_subject || "Phishing & Ransomware Outbreak",
+        risk_score: rawRes.risk_score || 0,
+        threat_level: rawRes.severity_level || rawRes.threat_level || "UNKNOWN THREAT LEVEL",
+        ai_summary: rawRes.ai_executive_summary || rawRes.ai_summary || "",
+        pipeline_steps: (rawRes.pipeline_stages || rawRes.pipeline_steps || []).map((stage: any, idx: number) => ({
+          id: stage.stage || stage.id || (idx + 1),
+          name: stage.name,
+          status: stage.status || "completed",
+          detail: stage.detail || `Stage ${stage.stage || stage.id || (idx + 1)} complete`
+        })),
+        evidence: rawRes.evidence || [],
+        recommendations: rawRes.playbook_actions || rawRes.recommendations || []
+      };
+
       setInvestigationResult(res);
       setMessages(m => [
         ...m,
         {
           role: "ai",
-          content: `### 🤖 Master AI Forensic Investigation Completed\n\n**Case Name:** ${res.case_name}\n**Risk Score:** ${res.risk_score}/100 (${res.threat_level})\n\n**AI Executive Summary:**\n${res.ai_summary}\n\n**Recommended Playbook Actions:**\n${res.recommendations.map(r => `- [${r.priority}] ${r.action}`).join("\n")}`,
+          content: `### 🤖 Master AI Forensic Investigation Completed\n\n**Case Name:** ${res.case_name}\n**Risk Score:** ${res.risk_score}/100 (${res.threat_level})\n\n**AI Executive Summary:**\n${res.ai_summary}\n\n**Recommended Playbook Actions:**\n${(res.recommendations || []).map(r => `- [${r.priority}] ${r.action}`).join("\n")}`,
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
         }
       ]);
-    } catch {
+    } catch (err) {
+      console.error("AI Investigation failed, falling back to mock data:", err);
       setInvestigationResult(fallback);
     } finally {
       clearInterval(interval);
