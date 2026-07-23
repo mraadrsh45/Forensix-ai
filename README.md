@@ -145,3 +145,14 @@ The API endpoints are grouped logically under `/api/v1/`:
 ## 🔒 Security & Compliance
 - **Data Protection**: Encryption in transit (TLS/HTTPS) and REST API security via OAuth2 password flow with JWT tokens.
 - **Evidence Integrity**: SHA-256 hash generation on upload for all digital evidence file objects to guarantee chain-of-custody verification.
+
+---
+
+## 🚀 Roadmap & Version Releases
+
+### Version 1.0.1 (Next Release)
+*   **Deep Forensic Module Activation**: Full integration of the local forensics engine core including:
+    *   *Memory Forensics*: Live Volatility 3 processing for memory-dump parsing and profile mapping.
+    *   *Network Forensics*: Deep PCAP protocol inspection and packet flow analyzer.
+    *   *Mobile Forensics*: Android/iOS backup file parsing and raw sqlite artifact extractor.
+
