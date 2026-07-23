@@ -46,7 +46,7 @@ export default function AIAssistant() {
     {
       role: "ai",
       content: "Hello, I'm ForensiX AI — your autonomous forensic investigation engine. Click 'Run AI Investigation' or ask any threat inquiry.",
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      time: "09:00 AM",
     },
   ]);
   const [input, setInput] = useState("");
